@@ -2049,7 +2049,7 @@ function init() {
 /* Welcome voice: browsers only allow sound after the visitor's first tap, click or key press, so it plays then, once per visit */
 function initGreeting() {
   const btn = $('#sound-btn'); if (!btn) return;
-  const audio = new Audio('audio/welcome.mp3'); audio.preload = 'auto'; audio.volume = 0.9;
+  const audio = new Audio('audio/welcome-gb.mp3'); audio.preload = 'auto'; audio.volume = 0.9;
   let on = store.get('sound', true) !== false, done = false, pending = false;
   try { done = sessionStorage.getItem('sora:greeted') === '1'; } catch (e) {}
   const evs = ['pointerdown', 'touchend', 'keydown'];
