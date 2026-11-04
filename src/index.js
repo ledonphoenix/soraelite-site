@@ -90,7 +90,7 @@ button[type=submit]:hover{background:#E2C590}
     <input type="hidden" name="next" value="${esc(next)}">
     <button type="submit">Enter</button>
   </form>
-  <p class="foot">Sora Élite Properties, Business Bay, Dubai<br>Need access? <span>+971 50 51 52 455</span></p>
+  <p class="foot">Sora Élite Properties, Business Bay, Dubai<br>Need access? <span>Ask Ledon</span></p>
 </main>
 <script>
 document.getElementById('show').addEventListener('click',function(){var i=document.getElementById('code'),on=i.type==='password';i.type=on?'text':'password';this.textContent=on?'Hide':'Show';this.setAttribute('aria-pressed',String(on));i.focus();});
