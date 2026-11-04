@@ -455,6 +455,30 @@ body[data-sky="day"] .hero{--h-ink:var(--sky-ink-day);--h-inv:#F5F2EA;--h-muted:
 .pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:40px}
 @media (max-width:800px){.vm,.pillars{grid-template-columns:minmax(0,1fr)}}
 
+/* CEO */
+.ceo{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,6vw,96px);align-items:center}
+@media (max-width:900px){.ceo{grid-template-columns:minmax(0,1fr)}}
+.ceo-photo{margin:0;position:relative;aspect-ratio:4/5;max-width:100%;overflow:hidden;background:#EEE8E0}
+.ceo-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;display:block}
+.ceo-photo::after{content:"";position:absolute;inset:14px;border:1px solid rgba(212,180,124,.55);pointer-events:none}
+@media (max-width:900px){.ceo-photo{max-width:440px;aspect-ratio:1/1}}
+.ceo-body{display:grid;gap:14px;min-width:0}
+.ceo-body h2{font-size:clamp(36px,4.6vw,60px);line-height:1.02}
+.ceo-role{color:var(--muted);font-size:16px}
+.quotes{display:grid;margin-top:clamp(16px,2.5vw,30px);padding-top:clamp(22px,3vw,34px);border-top:1px solid var(--line);position:relative}
+.quotes::before{content:"\201C";position:absolute;top:-4px;left:-4px;font-family:var(--f-display);font-size:clamp(84px,8vw,120px);line-height:1;color:var(--brass);opacity:.35;pointer-events:none}
+.q-slide{grid-area:1/1;margin:0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .7s ease,transform .7s ease,visibility 0s linear .7s}
+.q-slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .7s ease,transform .7s ease,visibility 0s}
+.q-slide p{font-family:var(--f-display);font-style:italic;font-size:clamp(25px,2.9vw,40px);line-height:1.22;color:var(--ink);text-wrap:balance;padding-left:clamp(34px,3.6vw,44px)}
+.q-nav{display:flex;align-items:center;gap:14px;margin-top:22px;flex-wrap:wrap}
+.q-btn{all:unset;box-sizing:border-box;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);cursor:pointer;color:var(--ink)}
+.q-btn:hover{border-color:var(--ink)}
+.q-btn:focus-visible{outline:2px solid var(--brass-2);outline-offset:2px}
+.q-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6}
+.q-count{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px;min-width:46px;text-align:center}
+.q-prog{flex:1;min-width:80px;height:1px;background:var(--line);position:relative;overflow:hidden}
+.q-prog i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--brass)}
+.ceo .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
 /* FAQ */
 .faq-wrap{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.5fr);gap:clamp(28px,5vw,80px);align-items:start}
 @media (max-width:860px){.faq-wrap{grid-template-columns:minmax(0,1fr)}}
@@ -797,6 +821,28 @@ dialog::backdrop{background:rgba(6,10,20,.62);-webkit-backdrop-filter:blur(3px);
   </div>
 </section>
 
+<section class="section night" id="ceo" aria-labelledby="ceo-h">
+  <div class="wrap ceo">
+    <figure class="ceo-photo"><img src="img/ceo-abdulnaser-jamjam.webp" alt="Abdulnaser Jamjam, Chief Executive Officer of Sora Élite Properties" loading="lazy" decoding="async"></figure>
+    <div class="ceo-body">
+      <p class="lbl">A word from our CEO</p>
+      <h2 id="ceo-h">Abdulnaser Jamjam</h2>
+      <p class="ceo-role">Chief Executive Officer, Sora Élite Properties</p>
+      <div class="quotes" id="quotes" aria-roledescription="carousel" aria-label="Quotes from Abdulnaser Jamjam"><blockquote class="q-slide on" id="q0" aria-hidden="false"><p>In Dubai, the right address is never found on a portal. It is found through people who know which buildings hold their value, and which only hold a view.</p></blockquote><blockquote class="q-slide" id="q1" aria-hidden="true"><p>We don't sell properties. We protect decisions. If a home doesn't make sense for you, our first job is to say so.</p></blockquote><blockquote class="q-slide" id="q2" aria-hidden="true"><p>Dubai rewards buyers who move with clarity, not urgency. That is why we put the numbers on the table before we put the keys in your hand.</p></blockquote><blockquote class="q-slide" id="q3" aria-hidden="true"><p>Whether you are in Business Bay or on the other side of the world, distance should never stand between you and the right home. That is our responsibility, not yours.</p></blockquote><blockquote class="q-slide" id="q4" aria-hidden="true"><p>The best investment in Dubai is the one you are still proud of ten years later. That is the only standard my team works to.</p></blockquote></div>
+      <div class="q-nav">
+        <button type="button" class="q-btn" id="q-prev" aria-label="Previous quote"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="q-count" id="q-count" aria-live="polite">1 / 5</span>
+        <button type="button" class="q-btn" id="q-next" aria-label="Next quote"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        <span class="q-prog" aria-hidden="true"><i id="q-bar"></i></span>
+      </div>
+      <div class="acts">
+        <a class="btn btn-brass" id="ceo-wa" href="#" target="_blank" rel="noopener">Request a meeting with Mr. Jamjam</a>
+        <a class="btn btn-line" href="#brief">Send us your brief</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section band-surface" id="faq" aria-labelledby="faq-h">
   <div class="wrap faq-wrap">
     <div class="faq-side">
@@ -870,7 +916,7 @@ dialog::backdrop{background:rgba(6,10,20,.62);-webkit-backdrop-filter:blur(3px);
       </nav>
       <nav aria-label="Company">
         <h4>Company</h4>
-        <a href="#about">About</a><a href="#faq">FAQ</a><a href="#brief">Send a brief</a><a href="#contact">Contact</a>
+        <a href="#about">About</a><a href="#ceo">Our CEO</a><a href="#faq">FAQ</a><a href="#brief">Send a brief</a><a href="#contact">Contact</a>
       </nav>
     </div>
     <div class="foot-bot">
@@ -2044,6 +2090,7 @@ function init() {
   }
   onScroll();
   initGreeting();
+  initCEO();
   try { initSky(); } catch (err) { console.error(err); }
 }
 /* Welcome voice: browsers only allow sound after the visitor's first tap, click or key press, so it plays then, once per visit */
@@ -2076,6 +2123,32 @@ function initGreeting() {
     else { audio.pause(); detach(); }
   });
   paint();
+}
+/* CEO quotes: rotate every 8 seconds; pause on hover, focus, off-screen or reduced motion */
+function initCEO() {
+  const slides = $$('#quotes .q-slide'); if (!slides.length) return;
+  const bar = $('#q-bar'), count = $('#q-count'), box = $('#ceo');
+  const DUR = 8000; let i = 0, t = 0, last = 0, paused = false, visible = false;
+  function show(n) {
+    i = (n + slides.length) % slides.length; t = 0;
+    slides.forEach((sl, k) => { sl.classList.toggle('on', k === i); sl.setAttribute('aria-hidden', String(k !== i)); });
+    count.textContent = (i + 1) + ' / ' + slides.length; bar.style.width = '0%';
+  }
+  $('#q-prev').addEventListener('click', () => show(i - 1));
+  $('#q-next').addEventListener('click', () => show(i + 1));
+  box.addEventListener('pointerenter', () => { paused = true; });
+  box.addEventListener('pointerleave', () => { paused = false; });
+  box.addEventListener('focusin', () => { paused = true; });
+  box.addEventListener('focusout', () => { paused = false; });
+  $('#ceo-wa').href = waLink('Hello Sora Élite, I would like to arrange a meeting with Mr. Abdulnaser Jamjam to discuss buying or investing in Dubai.');
+  if (reduceMotion) return;
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(box); else visible = true;
+  function tick(ts) {
+    const dt = last ? ts - last : 0; last = ts;
+    if (visible && !paused && !document.hidden) { t += dt; if (t >= DUR) show(i + 1); bar.style.width = Math.min(100, t / DUR * 100) + '%'; }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
 function setCurSilent() { $$('.cur-seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cur === cur))); }
 init();
