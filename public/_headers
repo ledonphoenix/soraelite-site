@@ -4,3 +4,5 @@
   Cache-Control: no-cache
 /img/*
   Cache-Control: public, max-age=2592000
+/audio/*
+  Cache-Control: public, max-age=2592000

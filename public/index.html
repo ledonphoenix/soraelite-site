@@ -582,6 +582,8 @@ dialog::backdrop{background:rgba(6,10,20,.62);-webkit-backdrop-filter:blur(3px);
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="1"/><path d="M15.5 8.5V5.5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18.2 6.6a7.6 7.6 0 0 1 0 10.8"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></symbol>
 </svg>
 
 <a class="skip" href="#main">Skip to content</a>
@@ -602,6 +604,7 @@ dialog::backdrop{background:rgba(6,10,20,.62);-webkit-backdrop-filter:blur(3px);
         <button type="button" data-cur="AED" aria-pressed="true">AED</button><button type="button" data-cur="USD" aria-pressed="false">USD</button><button type="button" data-cur="EUR" aria-pressed="false">EUR</button>
       </div>
       <button class="iconbtn" type="button" id="open-shortlist" aria-label="Open shortlist"><svg class="ic"><use href="#i-heart"/></svg><span class="badge" id="sl-count" hidden>0</span></button>
+      <button class="iconbtn" type="button" id="sound-btn" aria-pressed="true" aria-label="Turn the welcome message off"><svg class="ic"><use href="#i-sound"/></svg></button>
       <button class="iconbtn theme-btn" type="button" aria-label="Switch light or dark appearance"><svg class="ic"><use href="#i-moon"/></svg></button>
       <a class="btn btn-line hdr-cta" href="#contact">Speak to an advisor</a>
       <button class="iconbtn menu-btn" type="button" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg class="ic"><use href="#i-menu"/></svg></button>
@@ -2040,7 +2043,39 @@ function init() {
     ['residences', 'desk', 'communities', 'about', 'faq', 'contact'].forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
   }
   onScroll();
+  initGreeting();
   try { initSky(); } catch (err) { console.error(err); }
+}
+/* Welcome voice: browsers only allow sound after the visitor's first tap, click or key press, so it plays then, once per visit */
+function initGreeting() {
+  const btn = $('#sound-btn'); if (!btn) return;
+  const audio = new Audio('audio/welcome.mp3'); audio.preload = 'auto'; audio.volume = 0.9;
+  let on = store.get('sound', true) !== false, done = false, pending = false;
+  try { done = sessionStorage.getItem('sora:greeted') === '1'; } catch (e) {}
+  const evs = ['pointerdown', 'touchend', 'keydown'];
+  const paint = () => {
+    btn.setAttribute('aria-pressed', String(on));
+    btn.setAttribute('aria-label', on ? 'Turn the welcome message off' : 'Turn the welcome message on');
+    btn.querySelector('use').setAttribute('href', on ? '#i-sound' : '#i-mute');
+  };
+  const markDone = () => { done = true; try { sessionStorage.setItem('sora:greeted', '1'); } catch (e) {} detach(); };
+  const play = () => { try { audio.currentTime = 0; return audio.play(); } catch (e) { return Promise.reject(e); } };
+  function first(e) {
+    if (done || !on) { detach(); return; }
+    if (pending || (e.target && e.target.closest && e.target.closest('#sound-btn'))) return;
+    pending = true;
+    const p = play();
+    if (p && p.then) p.then(() => { pending = false; markDone(); }, () => { pending = false; });
+    else { pending = false; markDone(); }
+  }
+  function detach() { evs.forEach(ev => document.removeEventListener(ev, first, true)); }
+  if (!done && on) evs.forEach(ev => document.addEventListener(ev, first, true));
+  btn.addEventListener('click', () => {
+    on = !on; store.set('sound', on); paint();
+    if (on) { markDone(); const p = play(); if (p && p.catch) p.catch(() => {}); }
+    else { audio.pause(); detach(); }
+  });
+  paint();
 }
 function setCurSilent() { $$('.cur-seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cur === cur))); }
 init();
