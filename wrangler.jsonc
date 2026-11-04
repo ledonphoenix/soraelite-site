@@ -1,7 +1,14 @@
 {
   "name": "soraelite-site",
   "compatibility_date": "2026-10-01",
+  "main": "./src/index.js",
   "assets": {
-    "directory": "./public/"
+    "directory": "./public/",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {
+    "PREVIEW_SALT": "47c1d7513e70a0b134637a38551ee8c8",
+    "PREVIEW_HASH": "3ca5d79c094369c69f2a913f6c3641d8d6e3ada40708b1ec8f97c1c48f441748"
   }
 }
