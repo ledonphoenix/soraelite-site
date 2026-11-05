@@ -565,6 +565,7 @@ dialog::backdrop{background:rgba(6,10,20,.62);-webkit-backdrop-filter:blur(3px);
 @media (max-width:860px){.qv{grid-template-columns:minmax(0,1fr)}}
 .qv-media{display:grid;align-content:start;background:var(--plan-bg);min-width:0}
 .qv-media .media{border-radius:0}
+@media (min-width:861px){.qv-media{display:flex;flex-direction:column}.qv-media .media{flex:1 1 auto;aspect-ratio:auto;min-height:340px}}
 .qv-tabs{display:flex;gap:6px;padding:12px}
 .qv-tabs .seg{border-color:rgba(236,231,222,.25);color:#ECE7DE}
 .qv-tabs .seg button[aria-pressed="true"]{background:#ECE7DE;color:#111B2C}
